@@ -37,7 +37,7 @@ public class HpackDecodeTestBase {
    */
   protected static Collection<Story[]> createStories(String[] interopTests)
       throws Exception {
-    List<Story[]> result = new ArrayList<>();
+    List<Story[]> result = new ArrayList<Story[]>();
     for (String interopTestName : interopTests) {
       List<Story> stories = HpackJsonUtil.readStories(interopTestName);
       if (stories.isEmpty()) {
@@ -83,7 +83,7 @@ public class HpackDecodeTestBase {
    */
   private static void assertSetEquals(
       String message, List<Header> expected, List<Header> observed) {
-    assertEquals(message, new LinkedHashSet<>(expected), new LinkedHashSet<>(observed));
+    assertEquals(message, new LinkedHashSet<Header>(expected), new LinkedHashSet<Header>(observed));
   }
 
   protected Story getStory() {

@@ -95,7 +95,7 @@ public final class Headers {
 
   /** Returns an immutable case-insensitive set of header names. */
   public Set<String> names() {
-    TreeSet<String> result = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+    TreeSet<String> result = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
     for (int i = 0, size = size(); i < size; i++) {
       result.add(name(i));
     }
@@ -107,7 +107,7 @@ public final class Headers {
     List<String> result = null;
     for (int i = 0, size = size(); i < size; i++) {
       if (name.equalsIgnoreCase(name(i))) {
-        if (result == null) result = new ArrayList<>(2);
+        if (result == null) result = new ArrayList<String>(2);
         result.add(value(i));
       }
     }
@@ -197,7 +197,7 @@ public final class Headers {
   }
 
   public static final class Builder {
-    private final List<String> namesAndValues = new ArrayList<>(20);
+    private final List<String> namesAndValues = new ArrayList<String>(20);
 
     /**
      * Add a header line without any validation. Only appropriate for headers from the remote peer

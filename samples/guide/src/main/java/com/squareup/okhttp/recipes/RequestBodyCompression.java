@@ -45,7 +45,7 @@ public final class RequestBodyCompression {
   }
 
   public void run() throws Exception {
-    Map<String, String> requestBody = new LinkedHashMap<>();
+    Map<String, String> requestBody = new LinkedHashMap<String, String>();
     requestBody.put("longUrl", "https://publicobject.com/2014/12/04/html-formatting-javadocs/");
     RequestBody jsonRequestBody = RequestBody.create(
         MEDIA_TYPE_JSON, new Gson().toJson(requestBody));

@@ -258,7 +258,7 @@ public final class MockWebServerTest {
   private List<String> headersToList(MockResponse response) {
     Headers headers = response.getHeaders();
     int size = headers.size();
-    List<String> headerList = new ArrayList<>(size);
+    List<String> headerList = new ArrayList<String>(size);
     for (int i = 0; i < size; i++) {
       headerList.add(headers.name(i) + ": " + headers.value(i));
     }

@@ -3229,7 +3229,7 @@ public final class URLConnectionTest {
   }
 
   private static class FakeProxySelector extends ProxySelector {
-    List<Proxy> proxies = new ArrayList<>();
+    List<Proxy> proxies = new ArrayList<Proxy>();
 
     @Override public List<Proxy> select(URI uri) {
       // Don't handle 'socket' schemes, which the RI's Socket class may request (for SOCKS).

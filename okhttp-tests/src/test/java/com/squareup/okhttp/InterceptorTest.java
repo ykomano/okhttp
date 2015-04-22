@@ -555,7 +555,7 @@ public final class InterceptorTest {
 
   /** Catches exceptions that are otherwise headed for the uncaught exception handler. */
   private static class ExceptionCatchingExecutor extends ThreadPoolExecutor {
-    private final BlockingQueue<Exception> exceptions = new LinkedBlockingQueue<>();
+    private final BlockingQueue<Exception> exceptions = new LinkedBlockingQueue<Exception>();
 
     public ExceptionCatchingExecutor() {
       super(1, 1, 0, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());

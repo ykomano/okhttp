@@ -279,7 +279,7 @@ public final class HeadersTest {
   }
 
   @Test public void ofMapMakesDefensiveCopy() {
-    Map<String, String> namesAndValues = new HashMap<>();
+    Map<String, String> namesAndValues = new HashMap<String, String>();
     namesAndValues.put("User-Agent", "OkHttp");
 
     Headers headers = Headers.of(namesAndValues);

@@ -1772,7 +1772,7 @@ public final class CacheTest {
   }
 
   public void assertCookies(URL url, String... expectedCookies) throws Exception {
-    List<String> actualCookies = new ArrayList<>();
+    List<String> actualCookies = new ArrayList<String>();
     for (HttpCookie cookie : cookieManager.getCookieStore().get(url.toURI())) {
       actualCookies.add(cookie.toString());
     }
@@ -1966,7 +1966,7 @@ public final class CacheTest {
     URL url = server.getUrl("/");
     assertEquals("A", get(url).body().string());
 
-    final AtomicReference<String> ifNoneMatch = new AtomicReference<>();
+    final AtomicReference<String> ifNoneMatch = new AtomicReference<String>();
     client.networkInterceptors().add(new Interceptor() {
       @Override public Response intercept(Chain chain) throws IOException {
         ifNoneMatch.compareAndSet(null, chain.request().header("If-None-Match"));

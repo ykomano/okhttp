@@ -185,9 +185,9 @@ public final class WebSocketCallTest {
     Request request = new Request.Builder().get().url(server.getUrl("/")).build();
     WebSocketCall call = new WebSocketCall(client, request, random);
 
-    final AtomicReference<Response> responseRef = new AtomicReference<>();
-    final AtomicReference<WebSocket> webSocketRef = new AtomicReference<>();
-    final AtomicReference<IOException> failureRef = new AtomicReference<>();
+    final AtomicReference<Response> responseRef = new AtomicReference<Response>();
+    final AtomicReference<WebSocket> webSocketRef = new AtomicReference<WebSocket>();
+    final AtomicReference<IOException> failureRef = new AtomicReference<IOException>();
     final CountDownLatch latch = new CountDownLatch(1);
     call.enqueue(new WebSocketListener() {
       @Override public void onOpen(WebSocket webSocket, Request request, Response response)

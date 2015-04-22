@@ -71,7 +71,7 @@ import okio.Sink;
  * header fields, request method, etc.) are immutable.
  */
 public class HttpURLConnectionImpl extends HttpURLConnection {
-  private static final Set<String> METHODS = new LinkedHashSet<>(
+  private static final Set<String> METHODS = new LinkedHashSet<String>(
       Arrays.asList("OPTIONS", "GET", "HEAD", "POST", "PUT", "DELETE", "TRACE", "PATCH"));
 
   final OkHttpClient client;
@@ -537,7 +537,7 @@ public class HttpURLConnectionImpl extends HttpURLConnection {
    * defined in {@link Protocol OkHttp's protocol enumeration}.
    */
   private void setProtocols(String protocolsString, boolean append) {
-    List<Protocol> protocolsList = new ArrayList<>();
+    List<Protocol> protocolsList = new ArrayList<Protocol>();
     if (append) {
       protocolsList.addAll(client.getProtocols());
     }

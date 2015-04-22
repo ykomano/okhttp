@@ -27,7 +27,7 @@ import okio.Source;
 
 /** A simple file system where all files are held in memory. Not safe for concurrent use. */
 public final class InMemoryFileSystem implements FileSystem {
-  private final Map<File, Buffer> files = new LinkedHashMap<>();
+  private final Map<File, Buffer> files = new LinkedHashMap<File, Buffer>();
 
   @Override public Source source(File file) throws FileNotFoundException {
     Buffer result = files.get(file);

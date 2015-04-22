@@ -65,7 +65,7 @@ public final class HpackJsonUtil {
    * Reads stories named "story_xx.json" from the folder provided.
    */
   public static List<Story> readStories(String testFolderName) throws Exception {
-    List<Story> result = new ArrayList<>();
+    List<Story> result = new ArrayList<Story>();
     int i = 0;
     while (true) { // break after last test.
       String storyResourceName = String.format(STORY_RESOURCE_FORMAT, testFolderName, i);

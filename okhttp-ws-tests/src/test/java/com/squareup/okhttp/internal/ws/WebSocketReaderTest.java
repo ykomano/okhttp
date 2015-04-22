@@ -309,7 +309,7 @@ public final class WebSocketReaderTest {
   @Test public void closedMessageSourceThrows() throws IOException {
     data.write(ByteString.decodeHex("810548656c6c6f")); // Hello
 
-    final AtomicReference<Exception> exception = new AtomicReference<>();
+    final AtomicReference<Exception> exception = new AtomicReference<Exception>();
     callback.setNextMessageDelegate(new MessageDelegate() {
       @Override public void onMessage(BufferedSource payload, PayloadType type) throws IOException {
         payload.close();

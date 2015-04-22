@@ -36,7 +36,7 @@ public final class WebSocketRecorder implements WebSocketReader.FrameCallback, W
     void onMessage(BufferedSource payload, WebSocket.PayloadType type) throws IOException;
   }
 
-  private final BlockingQueue<Object> events = new LinkedBlockingQueue<>();
+  private final BlockingQueue<Object> events = new LinkedBlockingQueue<Object>();
   private MessageDelegate delegate;
 
   /** Sets a delegate for the next call to {@link #onMessage}. Cleared after invoked. */

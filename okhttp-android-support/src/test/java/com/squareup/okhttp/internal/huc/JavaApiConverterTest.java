@@ -210,7 +210,7 @@ public class JavaApiConverterTest {
     Request request = new Request.Builder().url(uri.toURL()).build();
     CacheResponse cacheResponse = new CacheResponse() {
       @Override public Map<String, List<String>> getHeaders() throws IOException {
-        Map<String, List<String>> headers = new HashMap<>();
+        Map<String, List<String>> headers = new HashMap<String, List<String>>();
         headers.put(null, Collections.singletonList(statusLine));
         headers.put("xyzzy", Arrays.asList("bar", "baz"));
         return headers;
@@ -243,7 +243,7 @@ public class JavaApiConverterTest {
     Request request = new Request.Builder().url(uri.toURL()).build();
     SecureCacheResponse cacheResponse = new SecureCacheResponse() {
       @Override public Map<String, List<String>> getHeaders() throws IOException {
-        Map<String, List<String>> headers = new HashMap<>();
+        Map<String, List<String>> headers = new HashMap<String, List<String>>();
         headers.put(null, Collections.singletonList(statusLine));
         headers.put("xyzzy", Arrays.asList("bar", "baz"));
         return headers;
@@ -308,7 +308,7 @@ public class JavaApiConverterTest {
   @Test public void createOkRequest_nonNullRequestHeaders() throws Exception {
     URI uri = new URI("https://foo/bar");
 
-    Map<String,List<String>> javaRequestHeaders = new HashMap<>();
+    Map<String,List<String>> javaRequestHeaders = new HashMap<String,List<String>>();
     javaRequestHeaders.put("Foo", Arrays.asList("Bar"));
     Request request = JavaApiConverter.createOkRequest(uri, "POST", javaRequestHeaders);
     assertTrue(request.isHttps());
@@ -326,7 +326,7 @@ public class JavaApiConverterTest {
   @Test public void createOkRequest_nullRequestHeaderKey() throws Exception {
     URI uri = new URI("https://foo/bar");
 
-    Map<String,List<String>> javaRequestHeaders = new HashMap<>();
+    Map<String,List<String>> javaRequestHeaders = new HashMap<String,List<String>>();
     javaRequestHeaders.put(null, Arrays.asList("GET / HTTP 1.1"));
     javaRequestHeaders.put("Foo", Arrays.asList("Bar"));
     Request request = JavaApiConverter.createOkRequest(uri, "POST", javaRequestHeaders);
@@ -658,7 +658,7 @@ public class JavaApiConverterTest {
   }
 
   @Test public void extractOkHeaders() {
-    Map<String, List<String>> javaResponseHeaders = new HashMap<>();
+    Map<String, List<String>> javaResponseHeaders = new HashMap<String, List<String>>();
     javaResponseHeaders.put(null, Arrays.asList("StatusLine"));
     javaResponseHeaders.put("key1", Arrays.asList("value1_1", "value1_2"));
     javaResponseHeaders.put("key2", Arrays.asList("value2"));
@@ -670,7 +670,7 @@ public class JavaApiConverterTest {
   }
 
   @Test public void extractStatusLine() {
-    Map<String, List<String>> javaResponseHeaders = new HashMap<>();
+    Map<String, List<String>> javaResponseHeaders = new HashMap<String, List<String>>();
     javaResponseHeaders.put(null, Arrays.asList("StatusLine"));
     javaResponseHeaders.put("key1", Arrays.asList("value1_1", "value1_2"));
     javaResponseHeaders.put("key2", Arrays.asList("value2"));
@@ -733,7 +733,7 @@ public class JavaApiConverterTest {
   }
 
   private static <T> Set<T> newSet(List<T> elements) {
-    return new LinkedHashSet<>(elements);
+    return new LinkedHashSet<T>(elements);
   }
 
   private static Request createArbitraryOkRequest() {

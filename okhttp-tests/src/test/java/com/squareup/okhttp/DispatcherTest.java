@@ -123,14 +123,14 @@ public final class DispatcherTest {
   }
 
   class RecordingExecutor extends AbstractExecutorService {
-    private List<AsyncCall> calls = new ArrayList<>();
+    private List<AsyncCall> calls = new ArrayList<AsyncCall>();
 
     @Override public void execute(Runnable command) {
       calls.add((AsyncCall) command);
     }
 
     public void assertJobs(String... expectedUrls) {
-      List<String> actualUrls = new ArrayList<>();
+      List<String> actualUrls = new ArrayList<String>();
       for (AsyncCall call : calls) {
         actualUrls.add(call.request().urlString());
       }

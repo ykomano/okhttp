@@ -1077,7 +1077,7 @@ public final class Spdy3ConnectionTest {
     MockSpdyPeer.InFrame synStream = peer.takeFrame();
     assertEquals(TYPE_HEADERS, synStream.type);
     for (int i = 0; i < 3; i++) {
-      List<Integer> windowUpdateStreamIds = new ArrayList<>(2);
+      List<Integer> windowUpdateStreamIds = new ArrayList<Integer>(2);
       for (int j = 0; j < 2; j++) {
         MockSpdyPeer.InFrame windowUpdate = peer.takeFrame();
         assertEquals(TYPE_WINDOW_UPDATE, windowUpdate.type);

@@ -49,7 +49,7 @@ public class Story implements Cloneable {
   public Story clone() throws CloneNotSupportedException {
     Story story = new Story();
     story.fileName = this.fileName;
-    story.cases = new ArrayList<>();
+    story.cases = new ArrayList<Case>();
     for (Case caze : cases) {
       story.cases.add(caze.clone());
     }

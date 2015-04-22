@@ -83,7 +83,7 @@ public final class CallTest {
   private static final SSLContext sslContext = SslContextBuilder.localhost();
 
   @Rule public final TemporaryFolder tempDir = new TemporaryFolder();
-  @Rule public final TestRule timeout = new Timeout(30_000);
+  @Rule public final TestRule timeout = new Timeout(30000);
 
   @Rule public final MockWebServerRule server = new MockWebServerRule();
   @Rule public final MockWebServerRule server2 = new MockWebServerRule();
@@ -1512,7 +1512,7 @@ public final class CallTest {
     server.enqueue(new MockResponse().setBody("A"));
 
     final CountDownLatch latch = new CountDownLatch(1);
-    final AtomicReference<String> bodyRef = new AtomicReference<>();
+    final AtomicReference<String> bodyRef = new AtomicReference<String>();
     final AtomicBoolean failureRef = new AtomicBoolean();
 
     Request request = new Request.Builder().url(server.getUrl("/a")).tag("request A").build();
@@ -1590,7 +1590,7 @@ public final class CallTest {
         .header("User-Agent", "SyncApiTest")
         .build();
 
-    final BlockingQueue<Response> responseRef = new SynchronousQueue<>();
+    final BlockingQueue<Response> responseRef = new SynchronousQueue<Response>();
     client.newCall(request).enqueue(new Callback() {
       @Override public void onFailure(Request request, IOException e) {
         throw new AssertionError();

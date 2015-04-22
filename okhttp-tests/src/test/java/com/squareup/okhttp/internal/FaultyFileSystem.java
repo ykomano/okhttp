@@ -28,7 +28,7 @@ import okio.Source;
 
 public final class FaultyFileSystem implements FileSystem {
   private final FileSystem delegate;
-  private final Set<File> writeFaults = new LinkedHashSet<>();
+  private final Set<File> writeFaults = new LinkedHashSet<File>();
 
   public FaultyFileSystem(FileSystem delegate) {
     this.delegate = delegate;

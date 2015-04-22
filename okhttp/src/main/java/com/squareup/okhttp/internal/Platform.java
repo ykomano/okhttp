@@ -119,9 +119,9 @@ public class Platform {
       }
 
       OptionalMethod<Socket> setUseSessionTickets
-          = new OptionalMethod<>(null, "setUseSessionTickets", boolean.class);
+          = new OptionalMethod<Socket>(null, "setUseSessionTickets", boolean.class);
       OptionalMethod<Socket> setHostname
-          = new OptionalMethod<>(null, "setHostname", String.class);
+          = new OptionalMethod<Socket>(null, "setHostname", String.class);
       Method trafficStatsTagSocket = null;
       Method trafficStatsUntagSocket = null;
       OptionalMethod<Socket> getAlpnSelectedProtocol = null;
@@ -136,11 +136,13 @@ public class Platform {
         // Attempt to find Android 5.0+ APIs.
         try {
           Class.forName("android.net.Network"); // Arbitrary class added in Android 5.0.
-          getAlpnSelectedProtocol = new OptionalMethod<>(byte[].class, "getAlpnSelectedProtocol");
-          setAlpnProtocols = new OptionalMethod<>(null, "setAlpnProtocols", byte[].class);
+          getAlpnSelectedProtocol =
+              new OptionalMethod<Socket>(byte[].class, "getAlpnSelectedProtocol");
+          setAlpnProtocols = new OptionalMethod<Socket>(null, "setAlpnProtocols", byte[].class);
         } catch (ClassNotFoundException ignored) {
         }
-      } catch (ClassNotFoundException | NoSuchMethodException ignored) {
+      } catch (ClassNotFoundException ignored) {
+      } catch (NoSuchMethodException ignored) {
       }
 
       return new Android(setUseSessionTickets, setHostname, trafficStatsTagSocket,
@@ -161,7 +163,8 @@ public class Platform {
       Method removeMethod = negoClass.getMethod("remove", SSLSocket.class);
       return new JdkWithJettyBootPlatform(
           putMethod, getMethod, removeMethod, clientProviderClass, serverProviderClass);
-    } catch (ClassNotFoundException | NoSuchMethodException ignored) {
+    } catch (ClassNotFoundException ignored) {
+    } catch (NoSuchMethodException ignored) {
     }
 
     return new Platform();
@@ -273,7 +276,7 @@ public class Platform {
 
     @Override public void configureTlsExtensions(
         SSLSocket sslSocket, String hostname, List<Protocol> protocols) {
-      List<String> names = new ArrayList<>(protocols.size());
+      List<String> names = new ArrayList<String>(protocols.size());
       for (int i = 0, size = protocols.size(); i < size; i++) {
         Protocol protocol = protocols.get(i);
         if (protocol == Protocol.HTTP_1_0) continue; // No HTTP/1.0 for ALPN.
@@ -283,7 +286,9 @@ public class Platform {
         Object provider = Proxy.newProxyInstance(Platform.class.getClassLoader(),
             new Class[] { clientProviderClass, serverProviderClass }, new JettyNegoProvider(names));
         putMethod.invoke(null, sslSocket, provider);
-      } catch (InvocationTargetException | IllegalAccessException e) {
+      } catch (InvocationTargetException e) {
+        throw new AssertionError(e);
+      } catch (IllegalAccessException e) {
         throw new AssertionError(e);
       }
     }
@@ -291,7 +296,9 @@ public class Platform {
     @Override public void afterHandshake(SSLSocket sslSocket) {
       try {
         removeMethod.invoke(null, sslSocket);
-      } catch (IllegalAccessException | InvocationTargetException ignored) {
+      } catch (IllegalAccessException ignored) {
+        throw new AssertionError();
+      } catch (InvocationTargetException ignored) {
         throw new AssertionError();
       }
     }
@@ -306,7 +313,9 @@ public class Platform {
           return null;
         }
         return provider.unsupported ? null : provider.selected;
-      } catch (InvocationTargetException | IllegalAccessException e) {
+      } catch (InvocationTargetException e) {
+        throw new AssertionError();
+      } catch (IllegalAccessException e) {
         throw new AssertionError();
       }
     }

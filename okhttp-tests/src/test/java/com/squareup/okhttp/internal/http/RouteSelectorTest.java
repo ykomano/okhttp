@@ -382,7 +382,7 @@ public final class RouteSelectorTest {
     dns.inetAddresses = makeFakeAddresses(255, 1);
 
     // Extract the regular sequence of routes from selector.
-    List<Route> regularRoutes = new ArrayList<>();
+    List<Route> regularRoutes = new ArrayList<Route>();
     while (routeSelector.hasNext()) {
       regularRoutes.add(routeSelector.next());
     }
@@ -394,7 +394,7 @@ public final class RouteSelectorTest {
     // Reset selector
     routeSelector = RouteSelector.get(address, httpsRequest, client);
 
-    List<Route> routesWithFailedRoute = new ArrayList<>();
+    List<Route> routesWithFailedRoute = new ArrayList<Route>();
     while (routeSelector.hasNext()) {
       routesWithFailedRoute.add(routeSelector.next());
     }
@@ -456,7 +456,7 @@ public final class RouteSelectorTest {
   }
 
   private static class FakeDns implements Network {
-    List<String> requestedHosts = new ArrayList<>();
+    List<String> requestedHosts = new ArrayList<String>();
     InetAddress[] inetAddresses;
 
     @Override public InetAddress[] resolveInetAddresses(String host) throws UnknownHostException {

@@ -126,7 +126,7 @@ public final class URLEncodingTest {
   }
 
   private URI backdoorUrlToUri(URL url) throws Exception {
-    final AtomicReference<URI> uriReference = new AtomicReference<>();
+    final AtomicReference<URI> uriReference = new AtomicReference<URI>();
 
     OkHttpClient client = new OkHttpClient();
     Internal.instance.setCache(client, new InternalCache() {

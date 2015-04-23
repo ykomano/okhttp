@@ -41,4 +41,8 @@ public enum TlsVersion {
     if (javaName.equals("SSLv3"))   return SSL_3_0;
     throw new IllegalArgumentException("Unexpected TLS version: " + javaName);
   }
+
+  public String javaName() {
+    return javaName;
+  }
 }

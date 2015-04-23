@@ -19,10 +19,12 @@ import com.squareup.okhttp.Handshake;
 import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
 import com.squareup.okhttp.internal.Util;
 import com.squareup.okhttp.internal.http.CacheRequest;
+import com.squareup.okhttp.internal.http.HttpMethod;
 import com.squareup.okhttp.internal.http.OkHeaders;
 import com.squareup.okhttp.internal.http.StatusLine;
 import java.io.IOException;
@@ -51,6 +53,7 @@ import okio.Sink;
  * Helper methods that convert between Java and OkHttp representations.
  */
 public final class JavaApiConverter {
+  private static final RequestBody EMPTY_REQUEST_BODY = RequestBody.create(null, new byte[0]);
 
   private JavaApiConverter() {
   }
@@ -163,10 +166,14 @@ public final class JavaApiConverter {
    */
   public static Request createOkRequest(
       URI uri, String requestMethod, Map<String, List<String>> requestHeaders) {
+    // OkHttp's Call API requires a placeholder body; the real body will be streamed separately.
+    RequestBody placeholderBody = HttpMethod.requiresRequestBody(requestMethod)
+        ? EMPTY_REQUEST_BODY
+        : null;
 
     Request.Builder builder = new Request.Builder()
         .url(uri.toString())
-        .method(requestMethod, null);
+        .method(requestMethod, placeholderBody);
 
     if (requestHeaders != null) {
       Headers headers = extractOkHeaders(requestHeaders);
@@ -338,8 +345,8 @@ public final class JavaApiConverter {
 
   /**
    * Extracts the status line from the supplied Java API {@link java.net.CacheResponse}.
-   * As per the spec, the status line is held as the header with the null key. Returns {@code null}
-   * if there is no status line.
+   * As per the spec, the status line is held as the header with the null key. Throws a
+   * {@link ProtocolException} if there is no status line.
    */
   private static String extractStatusLine(CacheResponse javaResponse) throws IOException {
     Map<String, List<String>> javaResponseHeaders = javaResponse.getHeaders();
@@ -347,10 +354,14 @@ public final class JavaApiConverter {
   }
 
   // VisibleForTesting
-  static String extractStatusLine(Map<String, List<String>> javaResponseHeaders) {
+  static String extractStatusLine(Map<String, List<String>> javaResponseHeaders)
+      throws ProtocolException {
     List<String> values = javaResponseHeaders.get(null);
     if (values == null || values.size() == 0) {
-      return null;
+      // The status line is missing. This suggests a badly behaving cache.
+      throw new ProtocolException(
+          "CacheResponse is missing a \'null\' header containing the status line. Headers="
+          + javaResponseHeaders);
     }
     return values.get(0);
   }

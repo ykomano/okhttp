@@ -129,8 +129,8 @@ public class ConnectionSpecSelectorTest {
   }
 
   private static void assertEnabledProtocols(SSLSocket socket, TlsVersion... required) {
-    Set<String> actual = new LinkedHashSet<>(Arrays.asList(socket.getEnabledProtocols()));
-    Set<String> expected = new LinkedHashSet<>(Arrays.asList(javaNames(required)));
+    Set<String> actual = new LinkedHashSet<String>(Arrays.asList(socket.getEnabledProtocols()));
+    Set<String> expected = new LinkedHashSet<String>(Arrays.asList(javaNames(required)));
     assertEquals(expected, actual);
   }
 

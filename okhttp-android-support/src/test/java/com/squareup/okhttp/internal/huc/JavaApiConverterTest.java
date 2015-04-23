@@ -239,7 +239,7 @@ public class JavaApiConverterTest {
     Request request = new Request.Builder().url(uri.toURL()).build();
     CacheResponse cacheResponse = new CacheResponse() {
       @Override public Map<String, List<String>> getHeaders() throws IOException {
-        Map<String, List<String>> headers = new HashMap<>();
+        Map<String, List<String>> headers = new HashMap<String, List<String>>();
         // Headers is deliberately missing an entry with a null key.
         headers.put("xyzzy", Arrays.asList("bar", "baz"));
         return headers;

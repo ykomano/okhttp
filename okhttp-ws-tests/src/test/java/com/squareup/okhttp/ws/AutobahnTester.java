@@ -116,7 +116,7 @@ public final class AutobahnTester {
   private long getTestCount() throws IOException {
     final CountDownLatch latch = new CountDownLatch(1);
     final AtomicLong countRef = new AtomicLong();
-    final AtomicReference<IOException> failureRef = new AtomicReference<>();
+    final AtomicReference<IOException> failureRef = new AtomicReference<IOException>();
     newWebSocket("/getCaseCount").enqueue(new WebSocketListener() {
       @Override public void onOpen(WebSocket webSocket, Request request, Response response)
           throws IOException {
